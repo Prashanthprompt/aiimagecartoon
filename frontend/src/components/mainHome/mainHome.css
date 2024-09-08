@@ -1,0 +1,44 @@
+.main-home-container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  /* background: #000000; */
+  background: #fff;
+  margin-top: 50px;
+}
+
+.main-home-title {
+  font-size: 20px;
+  font-family: "Nunito", sans-serif;
+  color: #2c3531;
+}
+
+.main-home-description {
+  font-size: 12px;
+  font-family: "Nunito", sans-serif;
+  width: 600px;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #2c3531;
+}
+
+.main-home-img {
+  width: 600px;
+  height: 350px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+.main-home-alter-img {
+  width: 120px;
+  height: 70px;
+  position: relative;
+  bottom: 120px;
+  right: -200px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

@@ -1,0 +1,35 @@
+.home-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.inner-container {
+  width: 550px;
+}
+
+.heading-text {
+  font-size: 40px;
+}
+
+.description {
+  padding-top: 10px;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.cartoonize-button {
+  width: 220px;
+  height: 50px;
+  text-align: center;
+  background: #2c3531;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.cartoon-img {
+  width: 500px;
+}
