@@ -17,7 +17,10 @@ const MainHome = ({ images, setShowModifiedHome }) => {
     <>
       {isVisible && (
         <div className="main-home-container">
-          <IoIosCloseCircleOutline onClick={closeImage} />
+          <IoIosCloseCircleOutline
+            className="close-icon"
+            onClick={closeImage}
+          />
           <h1 className="main-home-title">
             Unleash the Power of 3D Creativity for Your Little Ones
           </h1>

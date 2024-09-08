@@ -47,6 +47,7 @@
   color: #f2f2f2;
   font-size: 16px;
   font-family: "Nunito", sans-serif;
+  padding: 0px;
 }
 
 .login-submit-btn:hover {

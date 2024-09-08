@@ -129,13 +129,16 @@
   background-color: #ffffff;
   color: #2c3531;
   border: none;
-  padding: 10px 20px;
+  outline: none;
+  padding: 0px 20px;
   cursor: pointer;
   border-radius: 5px;
 }
 
 .upload-btn:hover {
-  background-color: #45a049;
+  background: none;
+  border: 2px solid #fff;
+  color: #fff;
 }
 
 .uploaded-image {
