@@ -14,9 +14,12 @@ const Generated3DModel = ({ imageUrl }) => {
       //   const formData = new FormData();
       //   formData.append("url", resultUrl);
 
-      const response = await axios.post("http://localhost:3000/upload", {
-        url: imageUrl,
-      });
+      const response = await axios.post(
+        "https://aibackend.netlify.app/upload",
+        {
+          url: imageUrl,
+        }
+      );
 
       // Handle the task ID from the response and track the status
       const taskId = response.data.taskId;

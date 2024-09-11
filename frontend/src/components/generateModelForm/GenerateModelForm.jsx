@@ -40,7 +40,7 @@ const GenerateModelForm = ({ imageUrl }) => {
       }
 
       const result = await axios.post(
-        "http://localhost:3000/api/generate-model",
+        "https://aibackend.netlify.app/api/generate-model",
         {
           url: imageUrl,
           description,
@@ -51,7 +51,7 @@ const GenerateModelForm = ({ imageUrl }) => {
         setResultUrl(result.data.result_url);
 
         const upscaleResult = await axios.post(
-          "http://localhost:3000/api/upscale-image",
+          "https://aibackend.netlify.app/api/upscale-image",
           {
             imageUrl: result.data.result_url,
           }
