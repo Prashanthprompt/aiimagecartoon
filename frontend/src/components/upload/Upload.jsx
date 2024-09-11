@@ -17,7 +17,7 @@ const Upload = () => {
 
       // Upload the image
       try {
-        const response = await fetch("http://localhost:3000/upload", {
+        const response = await fetch("https://aibackend.netlify.app/upload", {
           method: "POST",
           body: formData,
         });

@@ -10,10 +10,6 @@ const Generated3DModel = ({ imageUrl }) => {
 
   const handle3DModelCreation = async () => {
     try {
-      // Make a POST request to upload the image and request 3D model creation
-      //   const formData = new FormData();
-      //   formData.append("url", resultUrl);
-
       const response = await axios.post(
         "https://aibackend.netlify.app/upload",
         {
