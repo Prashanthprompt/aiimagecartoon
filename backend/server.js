@@ -10,9 +10,16 @@ const WebSocket = require("ws");
 const app = express();
 const PORT = 3000;
 
+// Configure CORS
+const corsOptions = {
+  origin: "https://aibackend.netlify.app", // Allow this origin
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+};
+
 // Middleware
 app.use(express.json());
-app.use(cors()); // Optional: For handling CORS
+app.use(cors(corsOptions));
 
 // Configure multer for file uploads (but not used in this case)
 const storage = multer.memoryStorage(); // Use memory storage for direct upload to Cloudinary
