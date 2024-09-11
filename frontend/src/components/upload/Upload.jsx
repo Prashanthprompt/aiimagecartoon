@@ -1,17 +1,37 @@
 import React, { useState, useRef } from "react";
 import "./Upload.css"; // Include your styles
-import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
-import ConvertedImage from "../convertedImage/convertedImage";
+import GenerateModelForm from "../generateModelForm/GenerateModelForm";
 
 const Upload = () => {
   const [image, setImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
   const fileInputRef = useRef(null);
 
-  const handleImageUpload = (event) => {
+  const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      setImage(URL.createObjectURL(file));
+      // Create a FormData object
+      const formData = new FormData();
+      formData.append("image", file);
+
+      // Upload the image
+      try {
+        const response = await fetch("http://localhost:3000/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+        if (data.imageUrl) {
+          setImageUrl(data.imageUrl);
+          setImage(URL.createObjectURL(file));
+        } else {
+          console.error("Error uploading image:", data.error);
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
     }
   };
 
@@ -23,7 +43,7 @@ const Upload = () => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
     if (file) {
-      setImage(URL.createObjectURL(file));
+      handleImageUpload({ target: { files: [file] } });
     }
   };
 
@@ -33,25 +53,32 @@ const Upload = () => {
 
   const handleChangeImage = () => {
     setImage(null);
+    setImageUrl("");
   };
 
   return (
     <>
-      {/* <button onClick={() => setIsOpen(true)}>Open Modal</button> */}
       <div className="modal">
         <div className="modal-content">
           {image ? (
-            <>
-              <div className="uploaded-container">
-                <button className="change-btn" onClick={handleChangeImage}>
-                  <FaPlus style={{ marginRight: "10px" }} /> Change Image
-                </button>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div>
+                <div className="uploaded-container">
+                  <button className="change-btn" onClick={handleChangeImage}>
+                    <FaPlus style={{ marginRight: "10px" }} /> Change Image
+                  </button>
+                </div>
+                <img src={image} alt="Uploaded" className="uploaded-image" />
+                <p className="uploaded-image-text">Original Image</p>
               </div>
-              <img src={image} alt="Uploaded" className="uploaded-image" />
-              <Link to="/converted-image" className="transform-to-cartoon-btn">
-                Transform to Cartoon
-              </Link>
-            </>
+              <GenerateModelForm imageUrl={imageUrl} />
+            </div>
           ) : (
             <>
               <h2>Transform your photo into Cartoon ✨</h2>

@@ -1,0 +1,31 @@
+.second-section-main-container {
+  margin-bottom: 30px;
+}
+
+.second-section-heading {
+  text-align: center;
+  margin-bottom: 30px;
+  font-family: "Nunito", sans-serif;
+}
+
+.cards-container {
+  width: 1000px;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.card-icon {
+  font-size: 50px;
+  padding: 10px;
+  filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.5));
+}
+
+.card-heading {
+  font-family: "Nunito", sans-serif;
+}
+
+.card-description {
+  font-family: "Nunito", sans-serif;
+  width: 300px;
+}

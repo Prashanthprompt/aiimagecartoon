@@ -27,6 +27,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  font-family: "Nunito", sans-serif;
 }
 
 .home-and-close {
@@ -46,6 +47,7 @@
 .modal-content h2 {
   color: #2c3531;
   padding-top: 20px;
+  font-family: "Nunito", sans-serif;
 }
 
 .uploaded-container {
@@ -76,6 +78,7 @@
   border: 2px solid #2c3531;
   position: relative;
   left: -75px;
+  font-family: "Nunito", sans-serif;
 }
 
 .change-btn:hover {
@@ -97,6 +100,7 @@
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+  font-family: "Nunito", sans-serif;
 }
 
 .transform-to-cartoon-btn:hover {
@@ -142,21 +146,15 @@
 }
 
 .uploaded-image {
-  max-width: 300px;
-  height: auto;
+  width: 300px;
+  height: 300px;
   margin: 10px 0;
+  object-fit: cover;
 }
 
-.close-btn {
-  margin-top: 0px;
-  background-color: #2c3531;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.close-btn:hover {
-  background-color: darkred;
+.uploaded-image-text {
+  font-size: 16px;
+  color: #2c3531;
+  font-weight: bold;
+  font-family: "Nunito", sans-serif;
 }

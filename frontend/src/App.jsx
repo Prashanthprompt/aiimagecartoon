@@ -15,22 +15,7 @@ import Home from "./components/home/Home";
 import img1 from "./assets/img1.jpg";
 import img2 from "./assets/img2.jpg";
 import Upload from "./components/upload/Upload";
-import ConvertedImage from "./components/convertedImage/convertedImage";
-
-// const videos = [
-//   {
-//     title: "Clap",
-//     url: video1,
-//     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-//     lang: "english",
-//   },
-//   {
-//     title: "Numbers",
-//     url: video2,
-//     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-//     lang: "english",
-//   },
-// ];
+import GenerateModelForm from "./components/generateModelForm/GenerateModelForm";
 
 const images = [
   {
@@ -44,8 +29,6 @@ const images = [
 ];
 
 function App() {
-  // const [searchQuery, setSearchQuery] = useState("");
-  // const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [showModifiedHome, setShowModifiedHome] = useState(true);
   const [loginStatus, setLoginStatus] = useState(
     sessionStorage.getItem("loginStatus") === "true"
@@ -109,7 +92,10 @@ function App() {
               <>
                 <Route path="/" element={<Home />} />
                 <Route path="/upload" element={<Upload />} />
-                <Route path="/converted-image" element={<ConvertedImage />} />
+                <Route
+                  path="/generated-cartoon"
+                  element={<GenerateModelForm />}
+                />
               </>
             )}
           </>

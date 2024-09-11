@@ -1,0 +1,13 @@
+.transform-to-3d-text {
+  background: #2c3531;
+  color: #ffffff;
+  width: 200px;
+  padding: 0px 20px;
+  position: relative;
+  top: 50%;
+  margin-left: 30px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: "Nunito", sans-serif;
+}
