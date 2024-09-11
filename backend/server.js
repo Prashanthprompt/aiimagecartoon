@@ -12,7 +12,7 @@ const PORT = 3000;
 
 // Configure CORS
 const corsOptions = {
-  origin: "https://aibackend.netlify.app", // Allow this origin
+  origin: "https://aicartoon3d.netlify.app/", // Allow this origin
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 };
@@ -26,83 +26,93 @@ const storage = multer.memoryStorage(); // Use memory storage for direct upload 
 const upload = multer({ storage: storage });
 
 // Image upload endpoint
-app.post("/upload", upload.single("image"), async (req, res) => {
-  if (req.file) {
-    try {
-      const result = await cloudinary.uploader
-        .upload_stream({ folder: "uploads" }, (error, result) => {
-          if (error) {
-            return res.status(500).json({ error: error.message });
-          }
-          res.json({ imageUrl: result.secure_url });
-        })
-        .end(req.file.buffer);
-    } catch (error) {
-      res.status(500).json({ error: "Error uploading image" });
+app.post(
+  "https://aicartoon3d.netlify.app/upload",
+  upload.single("image"),
+  async (req, res) => {
+    if (req.file) {
+      try {
+        const result = await cloudinary.uploader
+          .upload_stream({ folder: "uploads" }, (error, result) => {
+            if (error) {
+              return res.status(500).json({ error: error.message });
+            }
+            res.json({ imageUrl: result.secure_url });
+          })
+          .end(req.file.buffer);
+      } catch (error) {
+        res.status(500).json({ error: "Error uploading image" });
+      }
+    } else {
+      res.status(400).json({ error: "No file uploaded" });
     }
-  } else {
-    res.status(400).json({ error: "No file uploaded" });
   }
-});
+);
 
 // API call to generate the 3D model
-app.post("/api/generate-model", async (req, res) => {
-  try {
-    const body = {
-      url: req.body.url,
-      width: 1024,
-      height: 1024,
-      background: {
-        generate: {
-          description: req.body.description,
-          adapter_type: "face",
-          face_id: true,
+app.post(
+  "https://aicartoon3d.netlify.app/api/generate-model",
+  async (req, res) => {
+    try {
+      const body = {
+        url: req.body.url,
+        width: 1024,
+        height: 1024,
+        background: {
+          generate: {
+            description: req.body.description,
+            adapter_type: "face",
+            face_id: true,
+          },
         },
-      },
-    };
+      };
 
-    const response = await axios.post(
-      "https://deep-image.ai/rest_api/process_result",
-      body,
-      {
-        headers: {
-          "x-api-key": "8e8bd040-65dd-11ef-904f-7382d6a676af",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+      const response = await axios.post(
+        "https://deep-image.ai/rest_api/process_result",
+        body,
+        {
+          headers: {
+            "x-api-key": "8e8bd040-65dd-11ef-904f-7382d6a676af",
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    res.json(response.data);
-  } catch (error) {
-    console.error("Error generating model:", error);
-    res.status(500).json({ error: "Error generating model" });
+      res.json(response.data);
+    } catch (error) {
+      console.error("Error generating model:", error);
+      res.status(500).json({ error: "Error generating model" });
+    }
   }
-});
+);
 
 // API call to upscale the image
-app.post("/api/upscale-image", async (req, res) => {
-  try {
-    const response = await axios.post(
-      "https://deep-image.ai/rest_api/process_result",
-      {
-        url: req.body.imageUrl,
-        width: 3000,
-        generative_upscale: true,
-      },
-      {
-        headers: {
-          "x-api-key": "8e8bd040-65dd-11ef-904f-7382d6a676af",
-          "Content-Type": "application/json",
+app.post(
+  "https://aicartoon3d.netlify.app/api/upscale-image",
+  async (req, res) => {
+    try {
+      const response = await axios.post(
+        "https://deep-image.ai/rest_api/process_result",
+        {
+          url: req.body.imageUrl,
+          width: 3000,
+          generative_upscale: true,
         },
-      }
-    );
+        {
+          headers: {
+            "x-api-key": "8e8bd040-65dd-11ef-904f-7382d6a676af",
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    res.json(response.data);
-  } catch (error) {
-    console.error("Error Upscaling:", error);
-    res.status(500).json({ error: "Error upscaling image" });
+      res.json(response.data);
+    } catch (error) {
+      console.error("Error Upscaling:", error);
+      res.status(500).json({ error: "Error upscaling image" });
+    }
   }
-});
+);
 
 const apiKey = "tsk_-si8bUSP0mwg9tIWsZ-GBcXHsGk6WJAIoyNLZgS69BK";
 // Endpoint to handle image upload and request 3D model creation
@@ -204,7 +214,7 @@ function startWebSocket(taskId) {
 }
 
 // Endpoint to check the status of the 3D model creation
-app.get("/status/:taskId", async (req, res) => {
+app.get("https://aicartoon3d.netlify.app/status/:taskId", async (req, res) => {
   const { taskId } = req.params;
 
   try {
@@ -231,78 +241,84 @@ app.get("/status/:taskId", async (req, res) => {
 });
 
 // Endpoint to stylize the model
-app.post("/stylize/:taskId", async (req, res) => {
-  const { taskId } = req.params;
-  const { style } = req.body;
+app.post(
+  "https://aicartoon3d.netlify.app/stylize/:taskId",
+  async (req, res) => {
+    const { taskId } = req.params;
+    const { style } = req.body;
 
-  const stylizeRequest = {
-    type: "stylize_model",
-    style,
-    original_model_task_id: taskId,
-  };
+    const stylizeRequest = {
+      type: "stylize_model",
+      style,
+      original_model_task_id: taskId,
+    };
 
-  try {
-    const stylizeResponse = await fetch(
-      "https://api.tripo3d.ai/v2/openapi/task",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify(stylizeRequest),
+    try {
+      const stylizeResponse = await fetch(
+        "https://api.tripo3d.ai/v2/openapi/task",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify(stylizeRequest),
+        }
+      );
+
+      const stylizeResult = await stylizeResponse.json();
+      if (stylizeResponse.ok) {
+        res.json({ taskId: stylizeResult.data.task_id });
+      } else {
+        res.status(500).json({ error: stylizeResult.message });
       }
-    );
-
-    const stylizeResult = await stylizeResponse.json();
-    if (stylizeResponse.ok) {
-      res.json({ taskId: stylizeResult.data.task_id });
-    } else {
-      res.status(500).json({ error: stylizeResult.message });
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: error.message });
     }
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: error.message });
   }
-});
+);
 
 // Endpoint to convert the model
-app.post("/convert/:taskId", async (req, res) => {
-  const { taskId } = req.params;
-  const { format, quad, face_limit } = req.body;
+app.post(
+  "https://aicartoon3d.netlify.app/convert/:taskId",
+  async (req, res) => {
+    const { taskId } = req.params;
+    const { format, quad, face_limit } = req.body;
 
-  const convertRequest = {
-    type: "convert_model",
-    format,
-    original_model_task_id: taskId,
-    quad,
-    face_limit,
-  };
+    const convertRequest = {
+      type: "convert_model",
+      format,
+      original_model_task_id: taskId,
+      quad,
+      face_limit,
+    };
 
-  try {
-    const convertResponse = await fetch(
-      "https://api.tripo3d.ai/v2/openapi/task",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify(convertRequest),
+    try {
+      const convertResponse = await fetch(
+        "https://api.tripo3d.ai/v2/openapi/task",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify(convertRequest),
+        }
+      );
+
+      const convertResult = await convertResponse.json();
+      if (convertResponse.ok) {
+        res.json({ taskId: convertResult.data.task_id });
+      } else {
+        res.status(500).json({ error: convertResult.message });
       }
-    );
-
-    const convertResult = await convertResponse.json();
-    if (convertResponse.ok) {
-      res.json({ taskId: convertResult.data.task_id });
-    } else {
-      res.status(500).json({ error: convertResult.message });
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: error.message });
     }
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: error.message });
   }
-});
+);
 
 // Start the server
 app.listen(PORT, () => {
